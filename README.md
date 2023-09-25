@@ -5,3 +5,5 @@ https://pranavghosh19.github.io/Malware_Detection_Project/
 
 Here you can copy paste the URLs and check whether it is malicious or not.
 In the input section, I've given a condition that it should contain "https://" in the URL.
+It will show "Invalid URL" and shake if the URL doesn't contains "https://"
+"Try another URL" will basically refresh the page.
