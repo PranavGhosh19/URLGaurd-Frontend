@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malware Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet"> <!-- Import Poppins Bold font -->
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #FFFFFF;
+            animation: sparkle 1s infinite alternate;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .paragraph {
+            text-align: center;
+        }
+        
+        .paragraph span {
+            display: block;
+            opacity: 0;
+            animation: reveal 0.5s forwards var(--d);
+            font-family: 'Poppins', sans-serif;
+            font-weight: normal;
+            color: #FFFFFF;
+            margin: 10px auto; /* Center horizontally using 'auto' margin */
+            width: 65%;
+        }
+
+        
+        @keyframes reveal {
+        	from {
+        		transform: translateY(20px);
+        	}
+        	to {
+        		opacity: 1;
+        		transform: none;
+        	}
+        }
+
+        input[type="text"] {
+            width: 50%;
+            padding: 10px;
+            margin: 10px auto;
+            display: block;
+            border: 2px solid #FFFFFF;
+            background-color: transparent;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+            font-weight: normal;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            color: #000000;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: normal;
+            border-radius: 8px;
+            background-color: #87ceeb;
+            cursor: pointer;
+            transition: transform 0.2s; /* Add transition for the shaking effect */
+        }
+
+        /* Add a class for the green background */
+        .success {
+            background-color: #00ff00; /* Green color */
+        }
+
+        /* Add a class for the red background */
+        .error {
+            background-color: #ff0000; /* Red color */
+            animation: shake 0.5s ease-in-out 2; /* Shake animation */
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Malware Detection</h1>
+    <br>
+    <p class="paragraph">
+      <span style="--d: 0s;">Welcome to our cutting-edge Malware Detection Website, your ultimate destination for online security! In an increasingly interconnected digital world, protecting your devices and personal information is paramount.</span>
+      <br>
+      <span style="--d: .1s;">Our platform is your trusted ally in the battle against malicious software. With state-of-the-art technology, real-time updates, and a user-friendly interface, we empower you to surf the web with confidence. Stay one step ahead of cyber threats and safeguard your digital life effortlessly.</span>
+      <br>
+      <br>
+      <span style="--d: .2s;">Join us today and fortify your online defenses with ease!</span>
+      <br>
+      <span style="--d: .4s;">Paste a URL below for Molicious Detection</span>
+    </p>
+    
+    <!-- User Input Field -->
+    <input type="text" placeholder="Enter your URL here" required pattern="https?://">
+
+    <!-- Button -->
+    <button id="detectionButton" onclick="startDetection()">Test</button>
+    
+    <!-- "Test another URL" Button -->
+    <button onclick="resetPage()">Test another URL</button>
+    
+    <!-- Generate random stars using JavaScript -->
+    <script>
+        function generateStars() {
+            const numStars = 100; // Number of stars you want
+            const container = document.body;
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 2 + 0.5}s`; // Varying sparkle speed
+                container.appendChild(star);
+            }
+        }
+
+        // Generate stars when the page loads
+        window.onload = generateStars();
+
+        function startDetection() {
+            const button = document.getElementById("detectionButton");
+            const input = document.querySelector("input[type='text']");
+            const urlPattern = /^https?:\/\//i;
+        
+            // Change the button text to "Testing" during loading
+            button.innerText = "Testing...";
+        
+            // Check if the input value matches the URL pattern
+            if (urlPattern.test(input.value)) {
+                // Make an AJAX POST request to the PHP script
+                fetch('connect.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ input: input.value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response from the PHP script
+                    if (data.result === "Success") {
+                        // Success result
+                        button.innerText = "Success";
+                        button.classList.add("success");
+                    } else {
+                        // Error result
+                        button.innerText = "Error: " + data.result;
+                        button.classList.remove("success");
+                        button.classList.add("error");
+                    }
+                })
+                .catch(error => {
+                    // Handle any fetch errors here
+                    console.error(error);
+                });
+            } else {
+                // Invalid URL, display an error message
+                button.innerText = "Invalid URL";
+                button.classList.remove("success");
+                button.classList.add("error");
+            }
+        }
+
+        
+        // Function to reset the page
+        function resetPage() {
+            location.reload(); // Reload the current page
+        }
+    </script>
+</body>
+</html>
