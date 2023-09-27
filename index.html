@@ -164,36 +164,36 @@
         window.onload = generateStars();
         
         function startDetection() {
-            const button = document.getElementById("detectionButton");
-            const input = document.querySelector("input[type='url']");
-            const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
-        
-            // Change the button text to "Testing" during loading
-            button.innerText = "Testing...";
-        
-            // Check if the input value matches the URL pattern
-            if (urlPattern.test(input.value)) {
-                // Simulate a delay (you can replace this with your actual detection process)
-                setTimeout(function () {
-                    // Simulate a success result
-                    button.innerText = "Success";
-                    // Change the button background color to green and remove the "error" class
-                    button.classList.remove("error");
-                    button.classList.add("success");
-                }, 3000); // 3 seconds (adjust the time as needed)
-            } else {
-                // Invalid URL, display an error message, add the "error" class for shaking effect, and change button text to "Invalid URL"
-                button.innerText = "Invalid URL";
-                button.classList.remove("success");
-                button.classList.add("error");
-        
-                // Remove the error class after the shaking animation completes
-                setTimeout(function () {
-                    button.classList.remove("error");
-                    button.innerText = "Test";
-                }, 500); // 0.5 seconds (adjust the time as needed for the shaking animation)
-            }
-        }
+    const button = document.getElementById("detectionButton");
+    const input = document.querySelector("input[type='url']");
+    const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
+
+    // Change the button text to "Testing" during loading
+    button.innerText = "Testing...";
+
+    // Check if the input value matches the URL pattern
+    if (urlPattern.test(input.value)) {
+        // Simulate a delay (you can replace this with your actual detection process)
+        setTimeout(function () {
+            // Simulate a success result
+            button.innerText = "Success";
+            // Change the button background color to green and remove the "error" class
+            button.classList.remove("error");
+            button.classList.add("success");
+        }, 3000); // 3 seconds (adjust the time as needed)
+    } else {
+        // Invalid URL, display an error message, add the "error" class for shaking effect, and change button text to "Invalid URL"
+        button.innerText = "Invalid URL";
+        button.classList.remove("success");
+        button.classList.add("error");
+
+        // Remove the error class after the shaking animation completes
+        setTimeout(function () {
+            button.classList.remove("error");
+            button.innerText = "Test";
+        }, 500); // 0.5 seconds (adjust the time as needed for the shaking animation)
+    }
+}
         
         // Function to reset the page
         function resetPage() {
