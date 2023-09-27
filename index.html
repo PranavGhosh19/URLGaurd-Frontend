@@ -31,7 +31,7 @@
                 transform: translateY(-10px);
             }
         }
-
+        
         h1 {
             font-family: 'Poppins', sans-serif;
             font-weight: bold;
@@ -66,10 +66,10 @@
         	}
         }
 
-        input[type="text"] {
+        input[type="url"] {
             width: 50%;
             padding: 10px;
-            margin: 10px auto;
+            margin: 10px auto; /* Center the input field horizontally */
             display: block;
             border: 2px solid #FFFFFF;
             background-color: transparent;
@@ -78,6 +78,7 @@
             font-weight: normal;
             border-radius: 8px;
         }
+
 
         button {
             width: 150px;
@@ -131,20 +132,23 @@
       <br>
       <span style="--d: .4s;">Paste a URL below for Molicious Detection</span>
     </p>
+
     
     <!-- User Input Field -->
-    <input type="text" placeholder="Enter your URL here" required pattern="https?://">
-
-    <!-- Button -->
-    <button id="detectionButton" onclick="startDetection()">Test</button>
-    
-    <!-- "Test another URL" Button -->
-    <button onclick="resetPage()">Test another URL</button>
+    <form action="https://script.google.com/macros/s/AKfycbyk_ZaUnqyDRLPbJeV_YWu9e8df9ejafzDk2IFuDcZP/exec" method="post">
+      <!-- Button -->
+      <input type="url" name="url" placeholder="Enter your URL here" required>
+      <button id="detectionButton" onclick="startDetection()">Test</button>
+      
+      <!-- "Test another URL" Button -->
+      <button onclick="resetPage()">Test another URL</button>
+    </form>
     
     <!-- Generate random stars using JavaScript -->
     <script>
-        function generateStars() {
-            const numStars = 100; // Number of stars you want
+    
+            function generateStars() {
+            const numStars = 150; // Number of stars you want
             const container = document.body;
 
             for (let i = 0; i < numStars; i++) {
@@ -159,7 +163,7 @@
 
         // Generate stars when the page loads
         window.onload = generateStars();
-
+        
         function startDetection() {
             const button = document.getElementById("detectionButton");
             const input = document.querySelector("input[type='text']");
