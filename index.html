@@ -117,6 +117,18 @@
                 transform: translateX(5px);
             }
         }
+        
+        footer {
+            
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+        
     </style>
 </head>
 <body>
@@ -143,10 +155,14 @@
     <!-- "Test another URL" Button -->
     <button onclick="resetPage()">Test another URL</button>
     
-    <!-- Generate random stars using JavaScript -->
+    <footer>
+        <p>&copy; 2023 Malware Detection</p>
+    </footer>
+    
     <script>
     
-            function generateStars() {
+        //Generate random stars using JavaScript
+        function generateStars() {
             const numStars = 150; // Number of stars you want
             const container = document.body;
 
@@ -164,36 +180,59 @@
         window.onload = generateStars();
         
         function startDetection() {
-    const button = document.getElementById("detectionButton");
-    const input = document.querySelector("input[type='url']");
-    const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
-
-    // Change the button text to "Testing" during loading
-    button.innerText = "Testing...";
-
-    // Check if the input value matches the URL pattern
-    if (urlPattern.test(input.value)) {
-        // Simulate a delay (you can replace this with your actual detection process)
-        setTimeout(function () {
-            // Simulate a success result
-            button.innerText = "Success";
-            // Change the button background color to green and remove the "error" class
-            button.classList.remove("error");
-            button.classList.add("success");
-        }, 3000); // 3 seconds (adjust the time as needed)
-    } else {
-        // Invalid URL, display an error message, add the "error" class for shaking effect, and change button text to "Invalid URL"
-        button.innerText = "Invalid URL";
-        button.classList.remove("success");
-        button.classList.add("error");
-
-        // Remove the error class after the shaking animation completes
-        setTimeout(function () {
-            button.classList.remove("error");
-            button.innerText = "Test";
-        }, 500); // 0.5 seconds (adjust the time as needed for the shaking animation)
-    }
-}
+            const button = document.getElementById("detectionButton");
+            const input = document.querySelector("input[type='url']");
+            const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
+        
+            // Change the button text to "Testing" during loading
+            button.innerText = "Testing...";
+        
+            // Check if the input value matches the URL pattern
+            if (urlPattern.test(input.value)) {
+                // Simulate a delay (you can replace this with your actual detection process)
+                setTimeout(function () {
+                    // Simulate a success result
+                    button.innerText = "Success";
+                    // Change the button background color to green and remove the "error" class
+                    button.classList.remove("error");
+                    button.classList.add("success");
+                }, 3000); // 3 seconds (adjust the time as needed)
+            } else {
+                // Invalid URL, display an error message, add the "error" class for shaking effect, and change button text to "Invalid URL"
+                button.innerText = "Invalid URL";
+                button.classList.remove("success");
+                button.classList.add("error");
+        
+                // Remove the error class after the shaking animation completes
+                setTimeout(function () {
+                    button.classList.remove("error");
+                    button.innerText = "Test";
+                }, 500); // 0.5 seconds (adjust the time as needed for the shaking animation)
+            }
+        }
+        
+        function sendDataToGoogleAppsScript() {
+          const url = 'https://script.google.com/macros/s/AKfycbzUywQ3UKMWHbLMNfr97-rT2htaIQIRboXkwQjzRR_SCLTm-hyTEH-ax6NyNJuMHbV49A/exec'; // Replace with the URL of your Google Apps Script web app
+          const inputData = {
+            url: 'https://example.com' // Replace with the URL you want to send to the script
+          };
+        
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputData)
+          })
+          .then(response => response.text())
+          .then(data => {
+            // Handle the response from the Google Apps Script web app
+            console.log(data); // This could be "Success" or "Invalid URL" or an error message
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        }
         
         // Function to reset the page
         function resetPage() {
