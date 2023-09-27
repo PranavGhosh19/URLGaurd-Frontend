@@ -135,15 +135,13 @@
 
     
     <!-- User Input Field -->
-    <form action="https://script.google.com/macros/s/AKfycbwXgQwUeztX3lJrWHAAaV1T_tqyDPAnK-W7t1HEX3s2lYtNjEMtp-pJaM2jKABTVLt5lg/exec" method="post">
-      <!-- User Input Field -->
-      <input type="url" name="url" placeholder="Enter your URL here" required>
-      <!-- Button -->
-      <button id="detectionButton" onclick="startDetection()">Test</button>
+    <input type="url" name="url" placeholder="Enter your URL here" pattern="https?://">
+    
+    <!-- Button -->
+    <button id="detectionButton" onclick="startDetection()">Test</button>
       
-      <!-- "Test another URL" Button -->
-      <button onclick="resetPage()">Test another URL</button>
-    </form>
+    <!-- "Test another URL" Button -->
+    <button onclick="resetPage()">Test another URL</button>
     
     <!-- Generate random stars using JavaScript -->
     <script>
@@ -165,51 +163,42 @@
         // Generate stars when the page loads
         window.onload = generateStars();
         
-function startDetection(event) {
-  event.preventDefault(); // Prevent form submission
-
-  const button = document.getElementById("detectionButton");
-  const input = document.getElementById("url");
-  const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
-
-  // Change the button text to "Testing" during loading
-  button.innerText = "Testing...";
-
-  // Check if the input value matches the URL pattern
-  if (urlPattern.test(input.value)) {
-    // Create a FormData object and append the 'url' parameter
-    const formData = new FormData();
-    formData.append("url", input.value);
-
-    // Send the form data to the web app
-    fetch("https://script.google.com/macros/s/AKfycbwXgQwUeztX3lJrWHAAaV1T_tqyDPAnK-W7t1HEX3s2lYtNjEMtp-pJaM2jKABTVLt5lg/exec", {
-      method: "POST",
-      body: formData
-    })
-      .then(response => response.text())
-      .then(result => {
-        // Handle the response here (e.g., show "Success" or "Invalid URL")
-        button.innerText = result;
-        if (result === "Success") {
-          button.classList.add("success");
-        } else {
-          button.classList.remove("success");
-          button.classList.add("error");
+        function startDetection() {
+            const button = document.getElementById("detectionButton");
+            const input = document.querySelector("input[type='url']");
+            const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
+        
+            // Change the button text to "Testing" during loading
+            button.innerText = "Testing...";
+        
+            // Check if the input value matches the URL pattern
+            if (urlPattern.test(input.value)) {
+                // Simulate a delay (you can replace this with your actual detection process)
+                setTimeout(function () {
+                    // Simulate a success result
+                    button.innerText = "Success";
+                    // Change the button background color to green and remove the "error" class
+                    button.classList.remove("error");
+                    button.classList.add("success");
+                }, 3000); // 3 seconds (adjust the time as needed)
+            } else {
+                // Invalid URL, display an error message, add the "error" class for shaking effect, and change button text to "Invalid URL"
+                button.innerText = "Invalid URL";
+                button.classList.remove("success");
+                button.classList.add("error");
+        
+                // Remove the error class after the shaking animation completes
+                setTimeout(function () {
+                    button.classList.remove("error");
+                    button.innerText = "Test";
+                }, 500); // 0.5 seconds (adjust the time as needed for the shaking animation)
+            }
         }
-      })
-      .catch(error => {
-        // Handle errors
-        console.error(error);
-        button.innerText = "Error";
-      });
-  } else {
-    // Invalid URL, display an error message and add the "error" class for shaking effect
-    button.innerText = "Invalid URL";
-    button.classList.remove("success");
-    button.classList.add("error");
-  }
-}
-
+        
+        // Function to reset the page
+        function resetPage() {
+            location.reload(); // Reload the current page
+        }
     </script>
 </body>
 </html>
