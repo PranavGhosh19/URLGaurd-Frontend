@@ -166,58 +166,50 @@
         window.onload = generateStars();
         
 function startDetection(event) {
-    event.preventDefault(); // Prevent form submission
+  event.preventDefault(); // Prevent form submission
 
-    const button = document.getElementById("detectionButton");
-    const input = document.getElementById("url"); // Updated to use the 'id' attribute
-    const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
+  const button = document.getElementById("detectionButton");
+  const input = document.getElementById("url");
+  const urlPattern = /^https?:\/\//i; // Regular expression for http or https at the start
 
-    // Change the button text to "Testing" during loading
-    button.innerText = "Testing...";
+  // Change the button text to "Testing" during loading
+  button.innerText = "Testing...";
 
-    // Check if the input value matches the URL pattern
-    if (urlPattern.test(input.value)) {
-        const data = {
-            url: input.value // Create a JSON object with the 'url' property
-        };
+  // Check if the input value matches the URL pattern
+  if (urlPattern.test(input.value)) {
+    const urlData = { url: input.value }; // Create an object with the 'url' property
 
-        // Send the data as a JSON string
-        fetch("https://script.google.com/macros/s/AKfycbwXgQwUeztX3lJrWHAAaV1T_tqyDPAnK-W7t1HEX3s2lYtNjEMtp-pJaM2jKABTVLt5lg/exec", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => response.text())
-        .then(result => {
-            // Handle the response here (e.g., show "Success" or "Invalid URL")
-            button.innerText = result;
-            if (result === "Success") {
-                button.classList.add("success");
-            } else {
-                button.classList.remove("success");
-                button.classList.add("error");
-            }
-        })
-        .catch(error => {
-            // Handle errors
-            console.error(error);
-            button.innerText = "Error";
-        });
-    } else {
-        // Invalid URL, display an error message and add the "error" class for shaking effect
-        button.innerText = "Invalid URL";
-        button.classList.remove("success");
-        button.classList.add("error");
-    }
-}
+    // Send the data as form data
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(urlData)); // Convert the object to JSON and append it
 
-        
-        // Function to reset the page
-        function resetPage() {
-            location.reload(); // Reload the current page
+    fetch("https://script.google.com/macros/s/AKfycbwXgQwUeztX3lJrWHAAaV1T_tqyDPAnK-W7t1HEX3s2lYtNjEMtp-pJaM2jKABTVLt5lg/exec", {
+      method: "POST",
+      body: formData
+    })
+      .then(response => response.text())
+      .then(result => {
+        // Handle the response here (e.g., show "Success" or "Invalid URL")
+        button.innerText = result;
+        if (result === "Success") {
+          button.classList.add("success");
+        } else {
+          button.classList.remove("success");
+          button.classList.add("error");
         }
+      })
+      .catch(error => {
+        // Handle errors
+        console.error(error);
+        button.innerText = "Error";
+      });
+  } else {
+    // Invalid URL, display an error message and add the "error" class for shaking effect
+    button.innerText = "Invalid URL";
+    button.classList.remove("success");
+    button.classList.add("error");
+  }
+}
     </script>
 </body>
 </html>
