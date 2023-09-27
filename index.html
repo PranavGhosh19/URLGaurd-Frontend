@@ -177,12 +177,11 @@ function startDetection(event) {
 
   // Check if the input value matches the URL pattern
   if (urlPattern.test(input.value)) {
-    const urlData = { url: input.value }; // Create an object with the 'url' property
-
-    // Send the data as form data
+    // Create a FormData object and append the 'url' parameter
     const formData = new FormData();
-    formData.append("data", JSON.stringify(urlData)); // Convert the object to JSON and append it
+    formData.append("url", input.value);
 
+    // Send the form data to the web app
     fetch("https://script.google.com/macros/s/AKfycbwXgQwUeztX3lJrWHAAaV1T_tqyDPAnK-W7t1HEX3s2lYtNjEMtp-pJaM2jKABTVLt5lg/exec", {
       method: "POST",
       body: formData
@@ -210,6 +209,7 @@ function startDetection(event) {
     button.classList.add("error");
   }
 }
+
     </script>
 </body>
 </html>
