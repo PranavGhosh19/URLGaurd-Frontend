@@ -195,29 +195,6 @@
             }
         }
         
-        function sendDataToGoogleAppsScript() {
-          const url = 'https://script.google.com/macros/s/AKfycbzUywQ3UKMWHbLMNfr97-rT2htaIQIRboXkwQjzRR_SCLTm-hyTEH-ax6NyNJuMHbV49A/exec'; // Replace with the URL of your Google Apps Script web app
-          const inputData = {
-            url: 'https://example.com' // Replace with the URL you want to send to the script
-          };
-        
-          fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(inputData)
-          })
-          .then(response => response.text())
-          .then(data => {
-            // Handle the response from the Google Apps Script web app
-            console.log(data); // This could be "Success" or "Invalid URL" or an error message
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        }
-        
         // Function to reset the page
         function resetPage() {
             location.reload(); // Reload the current page
